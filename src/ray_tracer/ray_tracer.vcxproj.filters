@@ -28,6 +28,9 @@
     <Filter Include="Header Files\imgui\backends">
       <UniqueIdentifier>{4973bb17-7fa1-4f14-b249-a3c5d81597f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\renderer">
+      <UniqueIdentifier>{fab0ef44-62a6-434a-9d30-74307cd41717}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -53,6 +56,12 @@
     </ClCompile>
     <ClCompile Include="..\libs\imgui\backends\imgui_impl_glfw.cpp">
       <Filter>Source Files\imgui\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="canvas.cpp">
+      <Filter>Source Files\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="canvas.h">
+      <Filter>Source Files\renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

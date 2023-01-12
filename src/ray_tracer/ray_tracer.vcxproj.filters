@@ -63,6 +63,9 @@
     <ClCompile Include="canvas.h">
       <Filter>Source Files\renderer</Filter>
     </ClCompile>
+    <ClCompile Include="renderer.cpp">
+      <Filter>Source Files\renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\libs\imgui\imconfig.h">
@@ -91,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="..\libs\imgui\backends\imgui_impl_glfw.h">
       <Filter>Header Files\imgui\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer.h">
+      <Filter>Source Files\renderer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

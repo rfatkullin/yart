@@ -13,6 +13,7 @@
 #endif
 #include <GLFW/glfw3.h> // Will drag system OpenGL headers
 #include "canvas.h"
+#include "renderer.h"
 
 // [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to maximize ease of testing and compatibility with old VS compilers.
 // To link with VS2010-era libraries, VS2015+ requires linking with legacy_stdio_definitions.lib, which we do using this pragma.
@@ -32,7 +33,7 @@ int MainWidgetWidth = 1280;
 int MainWidgetHeight = 720;
 
 GLuint _renderedTextureId = 0;
-Canvas* _canvas = nullptr;
+Renderer* _renderer = nullptr;
 
 int main(int, char**)
 {
@@ -119,7 +120,7 @@ int main(int, char**)
 	bool show_another_window = false;
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-	_canvas = new Canvas(MainWidgetWidth, MainWidgetHeight);
+	_renderer = new Renderer();
 
 	// Main loop
 	while (!glfwWindowShouldClose(window))
@@ -223,7 +224,7 @@ int main(int, char**)
 		glfwSwapBuffers(window);
 	}
 
-	delete _canvas;
+	delete _renderer;
 
 	// Cleanup
 	ImGui_ImplOpenGL3_Shutdown();
@@ -236,19 +237,6 @@ int main(int, char**)
 	return 0;
 }
 
-
-void RunRayTracer(int width, int height)
-{
-	_canvas->Resize(width, height);
-
-	for (uint32_t i = 0; i < width; ++i)
-	{
-		for (uint32_t j = 0; j < height; ++j)
-		{
-			_canvas->PutPixel(i, j, 0x22FF0000);
-		}
-	}
-}
 
 GLuint LoadCanvasToGpu(int width, int height)
 {
@@ -265,14 +253,14 @@ GLuint LoadCanvasToGpu(int width, int height)
 #if defined(GL_UNPACK_ROW_LENGTH) && !defined(__EMSCRIPTEN__)
 	glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
 #endif
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, _canvas->GetData());
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, _renderer->GetImageAsRawData());
 
 	return imageTexture;
 }
 
 GLuint RenderScene(int width, int height)
 {
-	RunRayTracer(width, height);
+	_renderer->Render(width, height);
 
 	return LoadCanvasToGpu(width, height);
 }
